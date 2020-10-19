@@ -1,0 +1,156 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="devlog.css">
+    <link href="Tranquil_Heart.css" type="text/css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <style>
+     
+      .under_banner_menu{    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #293546;
+    background-color: white;
+    padding: 10px;
+    padding-right: 30px;}
+
+    </style>
+  </head>
+<body id>
+  <main id="content" class="main-content" role="main">
+
+ 
+
+
+    <h1 style="    text-align: center;"> Julif-dragdrop Devlog </h1>
+    <p> Plugin Jquery para arrastrar elementos compatible con dispositivos mobiles creado para usar en mi proyecto deckbuilder</p>
+
+    <nav class="under_banner_menu">
+      <ul>
+         <!-- links de menu -->
+        <a id="version01link" href="#" ><li>  v 0.1 - Primeros pasos</li></a> 
+        <a id="version012link" href="#" ><li>  v 0.1.2 - Primeros pasos</li></a> 
+      </ul>
+    </nav>
+    <!-- Entradas -->
+    <h2  id="version01"  style="    border-bottom: solid 2px #eff0f1;"> v 0.1 - Primeros pasos </h2>
+    <p> 19/10/2020 </p>
+    <h3> Comentarios iniciales</h3>
+    <p> Este es el primer plugin que creo, y su finalidad ayudarme a crear mi juego deckbulider para navegador.</p>
+    <p> para considerar este proyecto un exito voy a tener que cumplir con una serie de expecativas:</p>
+    <ul>
+      <li> el plugin debe ser compatible con telefonos celulares. </li>
+      <li> debe poder distingir entre un arrastre y un click. </li>
+      <li> debe ser lo suficientemente flexible para permitirme tener varios tipos de dropzones. </li>
+      <li> debe poder arrastrar divs complejos y no solo imagenes. </li>
+    </ul>
+    <p> no estoy seguro de poder cumplir con todas estas espectativas, pero voy a hacer lo mejor que pueda </p>
+    <h3> Primeros pasos </h3>
+  
+    <p> ok, para comenzar voy a crear 3 tipos de elementos, una imagen un div y un div con elementos dentro. de esa manera voy a poder funcionar como funciona el plugin en cada uno de ellos.</p>
+<pre class="prettyprint lang-html" >
+&lt;img id=&quot;item-1&quot; src=&quot;https://www.w3schools.com/html/img_logo.gif&quot;&gt;
+
+&lt;div id=&quot;item-2&quot;&gt;item&lt;/div&gt;
+
+&lt;div class=&quot;item-3&quot;&gt;
+  &lt;div  class=&quot;item_card&quot; &gt;
+    &lt;div class=&quot;numero&quot; &gt;3&lt;/div&gt;
+    &lt;div class=&quot;texto&quot; &gt; lorem ipsum &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+<p> y les doy algo de estilo </p>
+<pre class="prettyprint lang-css" >
+  #item-1{
+    width: 200px;
+  }
+  #item-2{
+    display: flex;
+    background-color: #6b6bfd;
+    width: 120px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+  }
+  .item_card{
+    background-color: #a6a6b9;
+    width: 120px;
+    height: 150px;
+    position: relative;
+  }
+  .numero{
+    background-color: black;
+    color: white;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    padding: 5px;
+  }
+  .texto{
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</pre>
+<h3> atributo draggable </h3>
+<p> el atributo draggable me permite arrastrar items, asi que tengo que asignarle draggable="true" a cada uno de los items</p>
+<h3> atributo por plugin </h3>
+<p> antes que otra cosa hay que llamar a jquery </p>
+<pre class="prettyprint lang-js" > &lt;script src=&quot;https://code.jquery.com/jquery-1.12.4.min.js&quot;&gt;&lt;/script&gt; </pre> 
+<p> ahora,  para comenzar a crear este plugin voy a hacer que el atributo draggable sea asignado como true a todos los elementos con la clase item ( la cual le di a #item 1 2 y 3) </p>
+<pre class="prettyprint lang-js" >
+// julif-dragdrop v 0.1
+(function ( $ ) {
+  
+  $.fn.julif_dragdrop = function() {
+    this.attr("draggable", "true")
+    return this;
+  };
+}( jQuery ));
+$( ".item" ).julif_dragdrop();
+
+</pre>
+
+
+
+<h2  id="version01"  style="    border-bottom: solid 2px #eff0f1;"> v 0.1.2 - atributo por plugin  </h2>
+<p> 19/10/2020 </p>
+   
+<!--     <p> son 3 archivos html llamados index, solo que uno esta en la carpeta raiz y los otros estan en la carpeta blog y la carpeta devblog respectivamente.</p>
+    <p> cada uno de estos archivos tiene un nav con 3 links, que se redirigen entre si</p>
+ <pre class="prettyprint lang-html" >
+  &lt;nav&gt;<br/>    &lt;a href=&quot;index.html&quot; class=&quot;active&quot;&gt; Inicio &lt;/a&gt;<br/>    &lt;a href=&quot;blog/index.html&quot;&gt; blog &lt;/a&gt;<br/>    &lt;a href=&quot;devblog/index.html&quot;&gt; devblog &lt;/a&gt;<br/>  &lt;/nav&gt;<br/>  &lt;h1&gt; Inicio &lt;/h1&gt;
+</pre>
+ -->
+</main>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+
+<script type="text/javascript">
+  function goToByScroll(id){
+            // Reove "link" from the ID
+          id = id.replace("link", "");
+            // Scroll
+          $('html,body').animate({
+              scrollTop: $("#"+id).offset().top},
+              'slow');
+      }
+  
+      $(".under_banner_menu > ul >  a").click(function(e) { 
+            // Prevent a page reload when a link is pressed
+          e.preventDefault(); 
+            // Call the scroll function
+          goToByScroll($(this).attr("id"));           
+      });
+  </script>
+</body>
+</html>

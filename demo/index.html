@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+	<html lang="es">
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<style>
+    #item-1{
+      width: 200px;
+    }
+    #item-2{
+      display: flex;
+      background-color: #6b6bfd;
+      width: 120px;
+      height: 150px;
+      justify-content: center;
+      align-items: center;
+    }
+    .item_card{
+      background-color: #a6a6b9;
+      width: 120px;
+      height: 150px;
+      position: relative;
+    }
+    .numero{
+      background-color: black;
+      color: white;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      padding: 5px;
+    }
+    .texto{
+      position: absolute;
+      bottom: 0;
+      background-color: black;
+      color: white;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+	</style>
+	</head>
+	<body>
+    <img  id="item-1" src="https://www.w3schools.com/html/img_logo.gif" class="item">
+    <div id="item-2"  class="item" >item</div>
+
+    <div id="item-3"  class="item">
+      <div  class="item_card" >
+        <div class="numero" >3</div>
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+
+  </body>
+  <script>
+    // julif-dragdrop v 0.1
+
+    (function ( $ ) {
+      
+      $.fn.julif_dragdrop = function() {
+        this.attr("draggable", "true")
+        return this;
+      };
+
+    }( jQuery ));
+
+    $( ".item" ).julif_dragdrop();
+
+
+  </script>
+
+
+	</html> 
