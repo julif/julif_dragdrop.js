@@ -4,6 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<style>
+    #dropzone {
+  width: 350px;
+  height: 70px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
     #item-1{
       width: 200px;
     }
@@ -42,6 +48,8 @@
 	</style>
 	</head>
 	<body>
+    <div id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
     <img  id="item-1" src="https://www.w3schools.com/html/img_logo.gif" class="item">
     <div id="item-2"  class="item" >item</div>
 
@@ -54,12 +62,30 @@
 
   </body>
   <script>
+
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+/* function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+ */
+function drop(ev) {
+   ev.preventDefault();
+
+ /*  var data = ev.dataTransfer.getData("text");
+  console.log(data); 
+  alert("drop: " + data ) */
+  alert("drop" );
+}
     // julif-dragdrop v 0.1
 
     (function ( $ ) {
       
       $.fn.julif_dragdrop = function() {
-        this.attr("draggable", "true")
+        this.attr("draggable", "true");
+        // this.attr("ondragstart", "drag(event)");
         return this;
       };
 
