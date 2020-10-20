@@ -185,9 +185,6 @@ function drop(ev) {
 
 let isSwiping = false;
 var element;
-var timer;
-var touchDuration = 300;
-$('#auxiliar').hide();
 
 
  $('.item').on('touchstart', function (ev) {
@@ -198,20 +195,9 @@ $('#auxiliar').hide();
   //$('#auxiliar').attr('src', $(element).attr('src'));
   //document.getElementById("auxiliar").innerHTML= element.toString();
 
-
-  timer = setTimeout(function () {
-            // Se asigna el elemento  a el div  auxiliar
-            $(element.innerHTML).appendTo("#auxiliar");
-            // Se indica que se ha iniciado el dragging en dispositivo móvil
-            dragMobile = true;
-        }, touchDuration);
-        ev.preventDefault();
-
+  $(element.innerHTML).appendTo("#auxiliar");
 
   this.isSwiping = false; 
-
-
-
   
             // Se indica que se ha iniciado el dragging en dispositivo móvil
            
@@ -220,10 +206,6 @@ $('#auxiliar').hide();
 
  $('.item').on('touchmove', function (ev) {
   this.isSwiping = true; 
- /*  if (timer) {
-            clearTimeout(timer);
-        } */
-       // $(element.innerHTML).appendTo("#auxiliar");
         // Obtiene las coordenadas del touching
         var touch = ev.originalEvent.touches["0"];
         // Valida si se ha iniciado un arrastre en dispositivo móvil
@@ -267,10 +249,6 @@ $('#auxiliar').hide();
     });
 
     $('.item').on('touchend', function (ev) {
-      if (timer) {
-            clearTimeout(timer);
-        }
-
       if (this.isSwiping) { 
        // console.log(" dragg ");
         if (element) {
