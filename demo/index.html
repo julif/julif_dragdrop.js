@@ -5,12 +5,22 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<style>
     #dropzone {
-  width: 350px;
-  height: 70px;
-  padding: 10px;
-  border: 1px solid #aaaaaa;
-}
-    #item-1{
+      width: 350px;
+      height: 70px;
+      padding: 10px;
+      border: 1px solid #aaaaaa;    display: flex;
+
+    }
+    .item{
+      display: initial;
+      display: inline-block;
+      cursor: pointer;
+    }
+    #auxiliar{
+      opacity: 0.8;
+    position: absolute;
+    }
+/*     #item-1{
       width: 200px;
     }
     #item-2{
@@ -21,6 +31,9 @@
       justify-content: center;
       align-items: center;
     }
+    #item-3{
+      display: inline-block;
+    } */
     .item_card{
       background-color: #a6a6b9;
       width: 120px;
@@ -40,7 +53,7 @@
       bottom: 0;
       background-color: black;
       color: white;
-      width: 100%;
+       width: 100%; 
       display: flex;
       justify-content: center;
       align-items: center;
@@ -48,14 +61,34 @@
 	</style>
 	</head>
 	<body>
-    <div id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="dropzone" class="drop_zone" ondrop="drop(event)" ></div>
+    <div id="auxiliar"></div>
+    <ul id="used"></ul>
 
-    <img  id="item-1" src="https://www.w3schools.com/html/img_logo.gif" class="item">
-    <div id="item-2"  class="item" >item</div>
+    <!-- <img  id="item-1" src="https://www.w3schools.com/html/img_logo.gif" class="item">
+    <div id="item-2"  class="item" >item</div> -->
 
+    <div id="item-1"  class="item">
+      <div  class="item_card" >
+         <div class="numero" >1</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+    <div id="item-2"  class="item">
+      <div  class="item_card" >
+         <div class="numero" >2</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
     <div id="item-3"  class="item">
       <div  class="item_card" >
-        <div class="numero" >3</div>
+         <div class="numero" >3</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+    <div id="item-4"  class="item">
+      <div  class="item_card" >
+         <div class="numero" >4</div> 
         <div class="texto" > lorem ipsum </div>
       </div>
     </div>
@@ -64,34 +97,193 @@
   <script>
 
 
-function allowDrop(ev) {
+/* function allowDrop(ev) {
   ev.preventDefault();
-}
-/* function drag(ev) {
+} */
+function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
 }
- */
-function drop(ev) {
-   ev.preventDefault();
+$('.drop_zone').on('dragover', function (ev) {
+  ev.preventDefault();
+  $('.drop_zone').css("background-color", "#ffd998");
+});
+$('.drop_zone').on('dragleave', function (ev) {
+  ev.preventDefault();
+  $('.drop_zone').css("background-color", "white");
+});
+      
 
- /*  var data = ev.dataTransfer.getData("text");
-  console.log(data); 
-  alert("drop: " + data ) */
-  alert("drop" );
+function drop(ev) {
+  ev.preventDefault();
+
+  var data = ev.dataTransfer.getData("text");
+  // alert("drop: " + data );
+  // $('#' + data).appendTo($(ev.target));
+  console.log("drop: " + data ); 
+  $('.drop_zone').css("background-color", "white");
+
+  document.getElementById("used").innerHTML+="<li>"+ data + "</li>";
+  /* document.getElementById("item-1").outerHTML = ""; */
+  removeElement(data); 
+  function removeElement(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+  }
+
+
 }
-    // julif-dragdrop v 0.1
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+    // julif-dragdrop v 0.1.2.1
 
     (function ( $ ) {
-      
+
+
       $.fn.julif_dragdrop = function() {
         this.attr("draggable", "true");
-        // this.attr("ondragstart", "drag(event)");
+        this.attr("ondragstart", "drag(event)");
         return this;
       };
 
     }( jQuery ));
 
     $( ".item" ).julif_dragdrop();
+
+
+    $( ".item" ).on('click', function (evt){
+      // alert("click: "+ this.id);
+      //console.log( "click: "+ this.id);
+      alert("click  "+ this.id );
+
+    });
+
+
+    // Inicio del arrastre
+/*  $('.item').on('touchstart', function (ev) {
+  ev.preventDefault();
+ element = this; 
+  console.log(element); 
+ 
+
+ }); */
+
+
+
+
+let isSwiping = false;
+var element;
+
+
+ $('.item').on('touchstart', function (ev) {
+  ev.preventDefault();
+ element = this; 
+
+  //console.log(element.innerHTML); 
+  //$('#auxiliar').attr('src', $(element).attr('src'));
+  //document.getElementById("auxiliar").innerHTML= element.toString();
+
+  $(element.innerHTML).appendTo("#auxiliar");
+
+  this.isSwiping = false; 
+  
+            // Se indica que se ha iniciado el dragging en dispositivo móvil
+           
+
+ });
+
+ $('.item').on('touchmove', function (ev) {
+  this.isSwiping = true; 
+        // Obtiene las coordenadas del touching
+        var touch = ev.originalEvent.touches["0"];
+        // Valida si se ha iniciado un arrastre en dispositivo móvil
+      
+            // Se modifica la posición de la imagen auxiliar con opacidad al 80% 
+            // que sigue el movimiento del dedo a lo largo de la pantalla
+            $('#auxiliar').css({
+                top: touch.pageY - 100,
+                left: touch.pageX - 120,
+                opacity: 0.8,
+                display: 'block',
+                position: 'absolute'
+            });
+
+           
+          ev.preventDefault();
+                ev.stopPropagation();
+          //console.log("drop: " +  this.id );
+         
+         
+          
+
+           var changedTouch = event.changedTouches[0];
+           var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+     
+
+          if(elem.className == "drop_zone"){
+   
+            $('.drop_zone').css("background-color", "#ffd998");
+          }
+  // console.log( x);
+
+    
+           
+/* 
+          if(elem.className == "drop_zone"){
+            alert("hola");
+            
+          } */
+        
+    });
+
+    $('.item').on('touchend', function (ev) {
+      if (this.isSwiping) { 
+       // console.log(" dragg ");
+        if (element) {
+          ev.preventDefault();
+                ev.stopPropagation();
+          //console.log("drop: " +  this.id );
+          $('#auxiliar').hide();
+          document.getElementById("auxiliar").innerHTML="";
+          
+
+           var changedTouch = event.changedTouches[0];
+           var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+     
+         
+          //alert(elem.class);
+          if(elem.className == "drop_zone"){
+            //alert("hola");
+            document.getElementById("used").innerHTML+="<li>"+  this.id + "</li>";
+            document.getElementById(this.id).style.display= "none";
+          }
+  // console.log( x);
+
+      }
+        
+      }else {
+        
+        $('#auxiliar').hide();
+        document.getElementById("auxiliar").innerHTML="";
+        //console.log(" mobile click  "+ this.id );
+        alert(" mobile click  "+ this.id );
+
+
+      }
+      $('.drop_zone').css("background-color", "white");
+    });
+
 
 
   </script>
