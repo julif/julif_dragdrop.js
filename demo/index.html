@@ -187,23 +187,23 @@ let isSwiping = false;
 var element;
 var timer;
 var touchDuration = 300;
+var long_touch = false;
 $('#auxiliar').hide();
 
 
  $('.item').on('touchstart', function (ev) {
+
   ev.preventDefault();
  element = this; 
 
-  //console.log(element.innerHTML); 
-  //$('#auxiliar').attr('src', $(element).attr('src'));
-  //document.getElementById("auxiliar").innerHTML= element.toString();
-
 
   timer = setTimeout(function () {
+    long_touch = false;
             // Se asigna el elemento  a el div  auxiliar
             $(element.innerHTML).appendTo("#auxiliar");
             // Se indica que se ha iniciado el dragging en dispositivo móvil
             dragMobile = true;
+            long_touch = true;
         }, touchDuration);
         ev.preventDefault();
 
@@ -219,59 +219,69 @@ $('#auxiliar').hide();
  });
 
  $('.item').on('touchmove', function (ev) {
-  this.isSwiping = true; 
- /*  if (timer) {
-            clearTimeout(timer);
-        } */
-       // $(element.innerHTML).appendTo("#auxiliar");
-        // Obtiene las coordenadas del touching
-        var touch = ev.originalEvent.touches["0"];
-        // Valida si se ha iniciado un arrastre en dispositivo móvil
-      
-            // Se modifica la posición de la imagen auxiliar con opacidad al 80% 
-            // que sigue el movimiento del dedo a lo largo de la pantalla
-            $('#auxiliar').css({
-                top: touch.pageY - 100,
-                left: touch.pageX - 120,
-                opacity: 0.8,
-                display: 'block',
-                position: 'absolute'
-            });
+   if(  long_touch == true ){
 
-           
-          ev.preventDefault();
-                ev.stopPropagation();
-          //console.log("drop: " +  this.id );
-         
-         
-          
 
-           var changedTouch = event.changedTouches[0];
-           var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
-     
+    this.isSwiping = true; 
 
-          if(elem.className == "drop_zone"){
-   
-            $('.drop_zone').css("background-color", "#ffd998");
-          }
-  // console.log( x);
 
-    
-           
-/* 
-          if(elem.className == "drop_zone"){
-            alert("hola");
-            
-          } */
+var touch = ev.originalEvent.touches["0"];
+// Valida si se ha iniciado un arrastre en dispositivo móvil
+
+    // Se modifica la posición de la imagen auxiliar con opacidad al 80% 
+    // que sigue el movimiento del dedo a lo largo de la pantalla
+    $('#auxiliar').css({
+        top: touch.pageY - 100,
+        left: touch.pageX - 120,
+        opacity: 0.8,
+        display: 'block',
+        position: 'absolute'
+    });
+
+  ev.preventDefault();
+  ev.stopPropagation();
+
+   var changedTouch = event.changedTouches[0];
+   var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+
+
+  if(elem.className == "drop_zone"){
+    $('.drop_zone').css("background-color", "#ffd998");
+  }
+
+   }
+ 
+
         
     });
 
+
+
     $('.item').on('touchend', function (ev) {
+
+
+
+
       if (timer) {
             clearTimeout(timer);
         }
 
-      if (this.isSwiping) { 
+        if(  long_touch == false ){
+
+          $('#auxiliar').hide();
+        document.getElementById("auxiliar").innerHTML="";
+        //console.log(" mobile click  "+ this.id );
+        alert(" mobile click  "+ this.id );
+
+
+         }
+         if(  long_touch == true ){
+
+          
+
+
+
+          if (this.isSwiping) { 
        // console.log(" dragg ");
         if (element) {
           ev.preventDefault();
@@ -304,7 +314,20 @@ $('#auxiliar').hide();
 
 
       }
+
+
+
+
+
+
+
+
+          }
+
+   
       $('.drop_zone').css("background-color", "white");
+
+      long_touch = false;
     });
 
 
