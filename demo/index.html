@@ -15,7 +15,10 @@
       display: initial;
       display: inline-block;
       cursor: pointer;
+
+      
     }
+
     #auxiliar{
       opacity: 0.9;
     position: absolute;
@@ -38,8 +41,23 @@
     .item_card{
       background-color: #a6a6b9;
       width: 120px;
-      height: 150px;
+      /* height: 150px; */
+      height: 210px;
       position: relative;
+
+      /* background-image: url(carta.png); */
+    background-position: center;
+    background-size: cover;
+    }
+    .card_1{ background-image: url(1.jpg);  }
+    .card_2{ background-image: url(2.jpg);  }
+    .card_3{ background-image: url(3.jpg);  }
+    .card_4{ background-image: url(4.jpg);  }
+
+    .item_card{
+      /* background-image: url(carta.png); */
+    background-position: center;
+    background-size: cover;
     }
     .numero{
       background-color: black;
@@ -70,25 +88,25 @@
     <div id="item-2"  class="item" >item</div> -->
 
     <div id="item-1"  class="item">
-      <div  class="item_card" >
+      <div  class="item_card card_1" >
          <div class="numero" >1</div> 
         <div class="texto" > lorem ipsum </div>
       </div>
     </div>
     <div id="item-2"  class="item">
-      <div  class="item_card" >
+      <div  class="item_card card_2" >
          <div class="numero" >2</div> 
         <div class="texto" > lorem ipsum </div>
       </div>
     </div>
     <div id="item-3"  class="item">
-      <div  class="item_card" >
+      <div  class="item_card card_3" >
          <div class="numero" >3</div> 
         <div class="texto" > lorem ipsum </div>
       </div>
     </div>
     <div id="item-4"  class="item">
-      <div  class="item_card" >
+      <div  class="item_card card_4" >
          <div class="numero" >4</div> 
         <div class="texto" > lorem ipsum </div>
       </div>
@@ -231,7 +249,7 @@ var touch = ev.originalEvent.touches["0"];
     // Se modifica la posición de la imagen auxiliar con opacidad al 80% 
     // que sigue el movimiento del dedo a lo largo de la pantalla
     $('#auxiliar').css({
-        top: touch.pageY - 170,
+        top: touch.pageY - 210,
         left: touch.pageX - 60,
         opacity: 0.8,
         display: 'block',
