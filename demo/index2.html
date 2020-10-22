@@ -122,6 +122,11 @@
 } */
 function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
+  //ev.target.style.opacity=0.99999 ;
+  ev.target.style.opacity=0.001 ;
+ 
+  //ev.dataTransfer.style.opacity=0.99999 ;
+  //console.log( ev);
 }
 $('.drop_zone').on('dragover', function (ev) {
   ev.preventDefault();
@@ -135,7 +140,7 @@ $('.drop_zone').on('dragleave', function (ev) {
 
 function drop(ev) {
   ev.preventDefault();
-
+  ev.target.style.opacity=100 ;
   var data = ev.dataTransfer.getData("text");
   // alert("drop: " + data );
   // $('#' + data).appendTo($(ev.target));
@@ -152,7 +157,9 @@ function drop(ev) {
 
 
 }
-
+function dragend(ev) { 
+  ev.target.style.opacity=100 ;
+ }
 
 
 
@@ -166,6 +173,7 @@ function drop(ev) {
       $.fn.julif_dragdrop = function() {
         this.attr("draggable", "true");
         this.attr("ondragstart", "drag(event)");
+        this.attr("ondragend", "dragend(event)");
         return this;
       };
 
