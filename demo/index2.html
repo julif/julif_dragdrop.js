@@ -15,12 +15,10 @@
       display: initial;
       display: inline-block;
       cursor: pointer;
-
-      
     }
 
     #auxiliar{
-      opacity: 0.9;
+      /* opacity: 0.9; */
     position: absolute;
     z-index: 100!important;
     }
@@ -157,14 +155,6 @@ function drop(ev) {
 
 
 
-
- 
-
-
-
-
-
-
     // julif-dragdrop v 0.1.2.1
 
     (function ( $ ) {
@@ -237,11 +227,23 @@ $('#auxiliar').hide();
  });
 
  $('.item').on('touchmove', function (ev) {
+   //var id_parent=  ev.target.parentElement.id
+   var id_parent=  ev.target.parentElement.id
+//console.log(ev.target.parentElement);
+
+
+document.getElementById(id_parent).style.opacity = "0.3";
+
+//id_parent.style.opacity = "0.3";
+
+      //document.getElementById("item-4").style.display = "none";
    if(  long_touch == true ){
 
-
+//var self = this;
     this.isSwiping = true; 
 
+    // console.log(this);
+    //$(this.id).css({opacity: 0.8});
 
 var touch = ev.originalEvent.touches["0"];
 // Valida si se ha iniciado un arrastre en dispositivo móvil
@@ -249,28 +251,55 @@ var touch = ev.originalEvent.touches["0"];
     // Se modifica la posición de la imagen auxiliar con opacidad al 80% 
     // que sigue el movimiento del dedo a lo largo de la pantalla
     $('#auxiliar').css({
-        top: touch.pageY - 232,
+        //top: touch.pageY - 232,
+       // left: touch.pageX - 60,
+       top: touch.pageY -100,
         left: touch.pageX - 60,
-        opacity: 0.8,
+        // opacity: 0.8,
         display: 'block',
         position: 'absolute'
     });
-
+    //document.getElementById("item-4").style.opacity = "0.8";
+ 
   ev.preventDefault();
   ev.stopPropagation();
 
    var changedTouch = event.changedTouches[0];
-   var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+   //var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY).closest( $('.drop_zone'));
+   var elem = document.elementsFromPoint(changedTouch.clientX, changedTouch.clientY)
 
+// console.log(elem);
+// elem.forEach(   console.log(elem) )
+elem.forEach(myFunction2);
+function myFunction2(element){ 
 
-  if(elem.className == "drop_zone"){
-    $('.drop_zone').css("background-color", "#ffd998");
+  if (element.className == "drop_zone") {
+    console.log(element.className);
+    //document.getElementById("dropzone").innerHTML = element.className;
+    //$('.drop_zone').css("background-color", "#ffd998");
+    // $('#dropzone').css("background-color", "#ffd998");
   }
-  else{
-    $('.drop_zone').css("background-color", "white");
+   else {
+   //document.getElementById("dropzone").innerHTML = "element";
+   // $('#dropzone').css("background-color", "white");
+   
   }
+ }; //myFunction2
+} //if(  long_touch == true )
+// console.log(elem.parentElement);
 
-   }
+// $( "#dropzone" ).mouseover(function() {
+//   $('.drop_zone').css("background-color", "#ffd998");
+// });
+
+  // if(elem.className == "drop_zone"){
+  //   $('.drop_zone').css("background-color", "#ffd998");
+  // }
+  // else{
+  //   $('.drop_zone').css("background-color", "white");
+  // }
+
+ 
  
 
         
@@ -280,7 +309,10 @@ var touch = ev.originalEvent.touches["0"];
 
     $('.item').on('touchend', function (ev) {
 
+      //this.css({opacity: 100});
 
+      var id_parent=  ev.target.parentElement.id
+document.getElementById(id_parent).style.opacity = "100";
 
 
       if (timer) {
@@ -298,9 +330,6 @@ var touch = ev.originalEvent.touches["0"];
          }
          if(  long_touch == true ){
 
-          
-
-
 
           if (this.isSwiping) { 
        // console.log(" dragg ");
@@ -315,41 +344,28 @@ var touch = ev.originalEvent.touches["0"];
            var changedTouch = event.changedTouches[0];
            var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
      
-         
           //alert(elem.class);
+          console.log(elem.className);
           if(elem.className == "drop_zone"){
             //alert("hola");
             document.getElementById("used").innerHTML+="<li>"+  this.id + "</li>";
             document.getElementById(this.id).style.display= "none";
           }
-  // console.log( x);
-
       }
-        
       }else {
-        
         $('#auxiliar').hide();
         document.getElementById("auxiliar").innerHTML="";
         //console.log(" mobile click  "+ this.id );
         alert(" mobile click  "+ this.id );
-
-
       }
-
-
-
-
-
-
-
-
-          }
-
-   
+    }
+  
       $('.drop_zone').css("background-color", "white");
-
       long_touch = false;
     });
+
+
+
 
 
 
