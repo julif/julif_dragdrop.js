@@ -16,6 +16,9 @@
       display: inline-block;
       cursor: pointer;
     }
+    .intro{
+     background-color: red;
+    }
 
     #auxiliar{
       /* opacity: 0.9; */
@@ -268,22 +271,29 @@ var touch = ev.originalEvent.touches["0"];
    //var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY).closest( $('.drop_zone'));
    var elem = document.elementsFromPoint(changedTouch.clientX, changedTouch.clientY)
 
-// console.log(elem);
+//console.log(elem);
 // elem.forEach(   console.log(elem) )
-elem.forEach(myFunction2);
-function myFunction2(element){ 
 
+//elem.forEach(myFunction2);
+
+ myFunction2(elem[2]);
+function myFunction2(element){ 
+ // $('#dropzone').css("background-color", "white");
   if (element.className == "drop_zone") {
     console.log(element.className);
     //document.getElementById("dropzone").innerHTML = element.className;
     //$('.drop_zone').css("background-color", "#ffd998");
-    // $('#dropzone').css("background-color", "#ffd998");
+    $('#dropzone').css("background-color", "#ffd998");
+    //$('').css("background-color", "red!important");
+    //$("#dropzone").addClass("intro");
+     
+  } else {
+
+    console.log(element.className);
+    $('#dropzone').css("background-color", "white");
+    
   }
-   else {
-   //document.getElementById("dropzone").innerHTML = "element";
-   // $('#dropzone').css("background-color", "white");
-   
-  }
+
  }; //myFunction2
 } //if(  long_touch == true )
 // console.log(elem.parentElement);
