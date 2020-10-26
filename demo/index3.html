@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+	<html lang="es">
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<style>
+    #dropzone2 , #dropzone {
+      width: 350px;
+      height: 70px;
+      padding: 10px;
+      border: 1px solid #aaaaaa;    display: flex;
+
+    }
+    .item{
+      display: initial;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .intro{
+     background-color: red;
+    }
+
+    #auxiliar{
+      /* opacity: 0.9; */
+    position: absolute;
+    z-index: 100!important;
+    }
+/*     #item-1{
+      width: 200px;
+    }
+    #item-2{
+      display: flex;
+      background-color: #6b6bfd;
+      width: 120px;
+      height: 150px;
+      justify-content: center;
+      align-items: center;
+    }
+    #item-3{
+      display: inline-block;
+    } */
+    .item_card{
+      background-color: #a6a6b9;
+      width: 120px;
+      /* height: 150px; */
+      height: 210px;
+      position: relative;
+
+      /* background-image: url(carta.png); */
+    background-position: center;
+    background-size: cover;
+    }
+    .card_1{ background-image: url(1.jpg);  }
+    .card_2{ background-image: url(2.jpg);  }
+    .card_3{ background-image: url(3.jpg);  }
+    .card_4{ background-image: url(4.jpg);  }
+    .card_5{ background-image: url(carta5.png);  }
+
+    .item_card{
+      /* background-image: url(carta.png); */
+    background-position: center;
+    background-size: cover;
+    }
+    .numero{
+      background-color: black;
+      color: white;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      padding: 5px;
+      font-size: 80%;
+    }
+    .texto{
+      position: absolute;
+      bottom: 0;
+      background-color: black;
+      color: white;
+       width: 100%; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+	</style>
+	</head>
+	<body>
+    <div id="dropzone" class="drop_zone" ondrop="drop(event)" ></div>
+    <div id="dropzone2" class="drop_zone" ondrop="drop(event)" ></div>
+    <div id="auxiliar"></div>
+    <ul id="used"></ul>
+
+    <!-- <img  id="item-1" src="https://www.w3schools.com/html/img_logo.gif" class="item">
+    <div id="item-2"  class="item" >item</div> -->
+
+    <div id="item-1"  class="item">
+      <div  class="item_card card_1" >
+         <div class="numero" >1</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+    <div id="item-2"  class="item">
+      <div  class="item_card card_2" >
+         <div class="numero" >2</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+    <div id="item-3"  class="item">
+      <div  class="item_card card_3" >
+         <div class="numero" >3</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+    <div id="item-4"  class="item">
+      <div  class="item_card card_4" >
+         <div class="numero" >4</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+    <div id="item-5"  class="item">
+      <div  class="item_card card_5" >
+         <div class="numero" >4</div> 
+        <div class="texto" > lorem ipsum </div>
+      </div>
+    </div>
+
+  </body>
+  <script>
+
+
+/* function allowDrop(ev) {
+  ev.preventDefault();
+} */
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+  //ev.target.style.opacity=0.99999 ;
+  ev.target.style.opacity=0.001 ;
+ 
+  //ev.dataTransfer.style.opacity=0.99999 ;
+  //console.log( ev);
+}
+$('#dropzone').on('dragover', function (ev) {
+  ev.preventDefault();
+  $('#dropzone').css("background-color", "#ffd998");
+});
+$('#dropzone').on('dragleave', function (ev) {
+  ev.preventDefault();
+  $('#dropzone').css("background-color", "white");
+});
+
+
+$('#dropzone2').on('dragover', function (ev) {
+  ev.preventDefault();
+  $('#dropzone2').css("background-color", "#ffd998");
+});
+$('#dropzone2').on('dragleave', function (ev) {
+  ev.preventDefault();
+  $('#dropzone2').css("background-color", "white");
+});
+    
+      
+
+function drop(ev) {
+  ev.preventDefault();
+  ev.target.style.opacity=100 ;
+  var data = ev.dataTransfer.getData("text");
+  // alert("drop: " + data );
+  // $('#' + data).appendTo($(ev.target));
+  console.log("drop: " + data ); 
+  $('.drop_zone').css("background-color", "white");
+
+  document.getElementById("used").innerHTML+="<li>"+ data + "</li>";
+  /* document.getElementById("item-1").outerHTML = ""; */
+  removeElement(data); 
+  function removeElement(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+  }
+
+
+}
+function dragend(ev) { 
+  ev.target.style.opacity=100 ;
+ }
+
+
+
+
+
+    // julif-dragdrop v 0.1.2.1
+
+    (function ( $ ) {
+
+
+      $.fn.julif_dragdrop = function() {
+        this.attr("draggable", "true");
+        this.attr("ondragstart", "drag(event)");
+        this.attr("ondragend", "dragend(event)");
+        return this;
+      };
+
+    }( jQuery ));
+
+    $( ".item" ).julif_dragdrop();
+
+
+    $( ".item" ).on('click', function (evt){
+      // alert("click: "+ this.id);
+      //console.log( "click: "+ this.id);
+      alert("click  "+ this.id );
+
+    });
+
+
+    // Inicio del arrastre
+/*  $('.item').on('touchstart', function (ev) {
+  ev.preventDefault();
+ element = this; 
+  console.log(element); 
+ 
+
+ }); */
+
+
+
+
+let isSwiping = false;
+var element;
+var timer;
+var touchDuration = 100;
+var long_touch = false;
+$('#auxiliar').hide();
+
+
+ $('.item').on('touchstart', function (ev) {
+
+  ev.preventDefault();
+ element = this; 
+
+
+  timer = setTimeout(function () {
+    long_touch = false;
+            // Se asigna el elemento  a el div  auxiliar
+            $(element.innerHTML).appendTo("#auxiliar");
+            // Se indica que se ha iniciado el dragging en dispositivo móvil
+            dragMobile = true;
+            long_touch = true;
+        }, touchDuration);
+        ev.preventDefault();
+
+
+  this.isSwiping = false; 
+
+
+
+  
+            // Se indica que se ha iniciado el dragging en dispositivo móvil
+           
+
+ });
+
+ $('.item').on('touchmove', function (ev) {
+   //var id_parent=  ev.target.parentElement.id
+   var id_parent=  ev.target.parentElement.id
+//console.log(ev.target.parentElement);
+
+
+document.getElementById(id_parent).style.opacity = "0.3";
+
+//id_parent.style.opacity = "0.3";
+
+      //document.getElementById("item-4").style.display = "none";
+   if(  long_touch == true ){
+
+//var self = this;
+    this.isSwiping = true; 
+
+    // console.log(this);
+    //$(this.id).css({opacity: 0.8});
+
+var touch = ev.originalEvent.touches["0"];
+// Valida si se ha iniciado un arrastre en dispositivo móvil
+
+    // Se modifica la posición de la imagen auxiliar con opacidad al 80% 
+    // que sigue el movimiento del dedo a lo largo de la pantalla
+    $('#auxiliar').css({
+        //top: touch.pageY - 232,
+       // left: touch.pageX - 60,
+       top: touch.pageY -100,
+        left: touch.pageX - 60,
+        // opacity: 0.8,
+        display: 'block',
+        position: 'absolute'
+    });
+    //document.getElementById("item-4").style.opacity = "0.8";
+ 
+  ev.preventDefault();
+  ev.stopPropagation();
+
+   var changedTouch = event.changedTouches[0];
+   //var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY).closest( $('.drop_zone'));
+   var elem = document.elementsFromPoint(changedTouch.clientX, changedTouch.clientY)
+
+//console.log(elem);
+// elem.forEach(   console.log(elem) )
+
+//elem.forEach(myFunction2);
+
+ myFunction2(elem[2]);
+function myFunction2(element){ 
+ // $('#dropzone').css("background-color", "white");
+  if (element.id == "dropzone") {$('#dropzone').css("background-color", "#ffd998");} 
+  if (element.id != "dropzone") {$('#dropzone').css("background-color", "white");}
+
+  if (element.id == "dropzone2") {$('#dropzone2').css("background-color", "#ffd998");}
+  if (element.id != "dropzone2") {$('#dropzone2').css("background-color", "white");}
+  // else {
+
+  //   console.log(element.className);
+  //   $('#dropzone').css("background-color", "white");
+    
+  // }
+
+ }; //myFunction2
+} //if(  long_touch == true )
+// console.log(elem.parentElement);
+
+// $( "#dropzone" ).mouseover(function() {
+//   $('.drop_zone').css("background-color", "#ffd998");
+// });
+
+  // if(elem.className == "drop_zone"){
+  //   $('.drop_zone').css("background-color", "#ffd998");
+  // }
+  // else{
+  //   $('.drop_zone').css("background-color", "white");
+  // }
+
+ 
+ 
+
+        
+    });
+
+
+
+    $('.item').on('touchend', function (ev) {
+
+      //this.css({opacity: 100});
+
+      var id_parent=  ev.target.parentElement.id
+document.getElementById(id_parent).style.opacity = "100";
+
+
+      if (timer) {
+            clearTimeout(timer);
+        }
+
+        if(  long_touch == false ){
+
+          $('#auxiliar').hide();
+        document.getElementById("auxiliar").innerHTML="";
+        //console.log(" mobile click  "+ this.id );
+        alert(" mobile click  "+ this.id );
+
+
+         }
+         if(  long_touch == true ){
+
+
+          if (this.isSwiping) { 
+       // console.log(" dragg ");
+        if (element) {
+          ev.preventDefault();
+                ev.stopPropagation();
+          //console.log("drop: " +  this.id );
+          $('#auxiliar').hide();
+          document.getElementById("auxiliar").innerHTML="";
+          
+
+           var changedTouch = event.changedTouches[0];
+           var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+     
+          //alert(elem.class);
+          console.log(elem.className);
+          if(elem.className == "drop_zone"){
+            //alert("hola");
+            document.getElementById("used").innerHTML+="<li>"+  this.id + "</li>";
+            document.getElementById(this.id).style.display= "none";
+          }
+      }
+      }else {
+        $('#auxiliar').hide();
+        document.getElementById("auxiliar").innerHTML="";
+        //console.log(" mobile click  "+ this.id );
+        alert(" mobile click  "+ this.id );
+      }
+    }
+  
+      $('.drop_zone').css("background-color", "white");
+      long_touch = false;
+    });
+
+
+
+
+
+
+  </script>
+
+
+	</html> 
