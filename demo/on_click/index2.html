@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+	<html lang="es">
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+	<style>
+    body{
+      margin: 0px auto;
+      font-family: "proxima-nova",sans-serif;
+     }
+    carta{
+      display: block;
+      width: 120px;
+      height: 210px;
+      /* background-color: red; */
+      cursor: pointer;
+
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      margin: 10px;
+      overflow: hidden;
+
+    }
+    #carta_005{  background-image: url(img/carta6.png);}
+    #carta_001{  background-image: url(img/1.jpg);}
+    #carta_002{  background-image: url(img/2.jpg);}
+    #carta_003{  background-image: url(img/3.jpg);}
+    #carta_004{  background-image: url(img/4.jpg);}
+
+    .numero {
+      background-color: black;
+      color: white;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      padding: 5px;
+      font-size: 100%;
+    }
+    .texto {
+      position: absolute;
+      bottom: 0;
+      background-color: black;
+      background-color: #000000c2;
+      color: white;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .texto p{
+      margin: 3%;
+    }
+    modal{
+      background-color: #000000e0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: none;
+    }
+  
+    #carta_en_modal{
+  /* height: 100%;  */
+  height: 100%;
+    width: 100%;
+    background-color: #02020285;
+
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+    modal  carta{
+     width: 250px;
+     height: 450px;
+     margin: 0px; 
+
+      
+    height:95%; 
+ 
+ width:23%; 
+
+    }
+/*     modal  carta{
+      position: absolute; 
+      top: 0; 
+      bottom: 0; 
+      left: 0; 
+      right: 0; 
+      background: rgba(255, 255, 153, .8); 
+    } */
+    modal .numero{
+    font-size: 180%;
+    padding: 5%;
+}
+modal .texto p {
+    margin: 3%;
+    font-size: 140%;
+}
+.ten_percent{
+  height: 10%;
+  width: 100%;
+}
+.eighty_percent{
+  height: 80%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#carta_en_modal_detalles{
+  /* background-color: red; */
+    height: 100%;
+    width: 40%;
+    margin-left: 20px;
+    color: white;
+    text-align: center;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6em;
+    overflow: auto;
+
+    
+}
+#carta_en_modal_detalles h1{
+text-align: center;
+margin-top: 0px;
+/* font-size: 3em; */
+
+ }
+ #carta_en_modal_detalles .detalles{
+color: #717171;
+
+ }
+ .ten_percent:first-child{
+  /* background-color: black; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+#btn_modal_close_container{
+    /* background-color: red; */
+    height: 100%;
+    width: 6%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+ #btn_modal_close{
+      /* position: absolute; */
+      top: 0px;
+      right: 0px;
+      fill: white;
+      /* padding: 20px; */
+      cursor: pointer;
+    }
+ #btn_modal_close{
+/*    height: 10px;
+   width: 10px; */
+   height: 25%;
+    /* background-color: blue;
+    padding: 30%; */
+ }
+
+
+@media only screen and (max-width: 800px) {
+  #btn_modal_close_container {
+    /* background-color: red; */
+    height: 12%;
+    width: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;    z-index: 100;
+    /* right: 10px; */
+}
+#btn_modal_close{
+/*    height: 10px;
+   width: 10px; */
+   height: 45%;
+    /* background-color: blue;
+    padding: 30%; */
+ }
+
+}
+	</style>
+	</head>
+	<body>
+    <modal id="modal">
+      <!-- <button > cerrar </button> -->
+      <!-- <div>
+
+
+      </div> -->
+     
+      <div class="ten_percent">
+        <div id="btn_modal_close_container">
+        <svg  id="btn_modal_close" enable-background="new 0 0 512.001 512.001"  viewBox="0 0 512.001 512.001" xmlns="http://www.w3.org/2000/svg"><g><path d="m512.001 84.853-84.853-84.853-171.147 171.147-171.148-171.147-84.853 84.853 171.148 171.147-171.148 171.148 84.853 84.853 171.148-171.147 171.147 171.147 84.853-84.853-171.148-171.148z"/></g></svg>
+      </div>
+      </div>
+     
+      <div class="eighty_percent animate__animated  animate__fadeIn">
+        <div id="carta_en_modal"></div>
+        <!-- <div id="carta_en_modal_detalles">
+          <h1> titulo </h1>
+          <p> algunos detalles </p>
+          <p> detalles </p>
+        </div> -->
+      </div>
+      <div class="ten_percent"></div>
+    </modal>
+    <div  style="display: flex">
+      <carta class="carta" id="carta_005" carta_img="img/carta6.png" carta_titulo="Nix" >
+        <div class="numero" >1</div> 
+        <div class="texto" > <p>  Nix </p></div>
+      </carta>
+      <carta class="carta" id="carta_001"   carta_img="img/1.jpg" carta_titulo="lorem ipsum">
+        <div class="numero" >2</div> 
+        <div class="texto" >  <p> lorem ipsum </p> </div>
+      </carta>
+      <carta class="carta" id="carta_002"  carta_img="img/2.jpg" carta_titulo="lorem ipsum">
+        <div class="numero" >2</div> 
+        <div class="texto" > <p> lorem ipsum </p> </div>
+      </carta>
+      <carta class="carta" id="carta_003"  carta_img="img/3.jpg" carta_titulo="lorem ipsum" >
+        <div class="numero" >3</div> 
+        <div class="texto" > <p> lorem ipsum </p> </div>
+      </carta>
+      <carta class="carta" id="carta_004"  carta_img="img/4.jpg" carta_titulo="lorem ipsum">
+        <div class="numero" >4</div> 
+        <div class="texto" > <p> lorem ipsum </p> </div>
+      </carta>
+    </div>
+  </body>
+  <script>
+    $( ".carta" ).on('click', function (evt){
+
+      document.getElementById("modal").style.display= "block";
+      
+      var cartatitulo = document.getElementById(this.id).getAttribute("carta_titulo"); 
+      var img_url = document.getElementById(this.id).getAttribute("carta_img");
+
+      // document.getElementById("carta_en_modal").innerHTML+= "<carta id='"+ this.id +"' >"+ this.innerHTML +"<carta>";
+        document.getElementById("carta_en_modal").innerHTML+= "<carta style='background-image: url( "+ img_url + ");'></carta>";
+        document.getElementById("carta_en_modal").innerHTML+= "<div id='carta_en_modal_detalles' ><div> <h1> "+ cartatitulo + " </h1> <p> coste: 2 </p> <p class='detalles' > detalles </p></div></div>";
+  
+  // alert("click: "+ this.id);
+  
+ // console.log( "click: "+ this.id);
+});
+
+$( "#btn_modal_close_container" ).on('click', function (evt){
+  document.getElementById("modal").style.display= "none";
+  document.getElementById("carta_en_modal").innerHTML="";
+});
+  </script>
+</html> 
