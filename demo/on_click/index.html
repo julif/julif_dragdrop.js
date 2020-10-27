@@ -106,7 +106,7 @@
 }
 
   .cartas{
-    height: 180px;
+    height: 110px;
     display: inline-flex;
     min-width: 100%;
     justify-content: center;
@@ -219,7 +219,7 @@
 cartas.forEach(mostar_cartas);
 
 function mostar_cartas(item, index) {
-  document.getElementById("cartas").innerHTML +=  "<carta  card_id='" + item.id + "'  class='carta_en_mano' style='background-image: url(" + item.imagen_src + ");' ><div class='carta_coste'> " + item.coste + "</div><div class='carta_nombre'><p> " + item.nombre + "</p></div></carta>";
+  document.getElementById("cartas").innerHTML +=  "<carta  card_id='" + item.id + "' class='carta_en_mano' style='background-image: url(" + item.imagen_src + ");' ><div class='carta_coste'> " + item.coste + "</div><div class='carta_nombre'><p> " + item.nombre + "</p></div></carta>";
  
 }
 </script>
@@ -227,19 +227,14 @@ function mostar_cartas(item, index) {
   setTimeout('imgSize()',50); // solo necesario hasta que halla un preloader 
  // imgSize();
   
-  // $("#carta_layout").load(function(){  });
   
   function imgSize(){
     var myImg = document.querySelector("#carta_layout");
     var currWidth = myImg.clientWidth;
     var currHeight = myImg.clientHeight;
-    //console.log("Current width=" + currWidth + ", " + "Original height=" + currHeight);
   
     $('.carta_en_mano').each(function(){
-      if (currWidth > 0) {
-        $(this).css("width",  currWidth+"px");
-      }
-     
+      $(this).css("width",  currWidth+"px");
       $(this).css("height", currHeight+"px" );
     });
 
@@ -247,36 +242,25 @@ function mostar_cartas(item, index) {
   
   
   </script>
-  <script>
-        $( ".carta_en_mano" ).on('click', function (evt){
+<script>
+$( ".carta_en_mano" ).on('click', function (evt){
+  document.getElementById("modal").style.display= "block"; //muestra el modal
+  var cardID = this.getAttribute("card_id");  //toma el id de la carta desde su atributo
+  
+  // toma los datos de la carta por su id
+  var results = cartas.filter(function (nickname) { return nickname.id == cardID; }); 
+  var firstObj = (results.length > 0) ? results[0] : null;
+  console.log(" nombre: "+firstObj.nombre);
+  console.log(" id: "+firstObj.id);
+  console.log(" coste: "+firstObj.coste);
+  console.log(" imagen_src: "+firstObj.imagen_src);
 
-document.getElementById("modal").style.display= "block";
-
- var cardID = this.getAttribute("card_id"); 
-// var img_url = document.getElementById(this.id).getAttribute("carta_img");
-
- 
-var results = cartas.filter(function (nickname) { return nickname.id == cardID; });
-        var firstObj = (results.length > 0) ? results[0] : null;
-        console.log(" nombre: "+firstObj.nombre);
-        console.log(" id: "+firstObj.id);
-        console.log(" coste: "+firstObj.coste);
-        console.log(" imagen_src: "+firstObj.imagen_src);
-       // console.log(" fecha: "+firstObj.fecha);
-
-// var bg = $(this).css('background-image');
-// console.log(bg);
-
-// document.getElementById("carta_en_modal").innerHTML+= "<carta id='"+ this.id +"' >"+ this.innerHTML +"<carta>";
+  // muestra los datos en el modal
   document.getElementById("carta_en_modal").innerHTML+= "<img src='"+ firstObj.imagen_src + "' >";
   document.getElementById("carta_en_modal").innerHTML+= "<div id='carta_en_modal_detalles' ><div> <h1> "+ firstObj.nombre + " </h1> <p> coste: "+ firstObj.coste + "  </p> <p class='detalles' > detalles </p></div></div>";
-
-// alert("click: "+ this.id);
-
-// console.log( "click: "+ this.id);
 });
-
-    $( "#btn_modal_close_container" ).on('click', function (evt){
+//oculta el modal y borra los datos
+$( "#btn_modal_close_container" ).on('click', function (evt){
   document.getElementById("modal").style.display= "none";
   document.getElementById("carta_en_modal").innerHTML="";
 });
