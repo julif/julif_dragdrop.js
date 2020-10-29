@@ -5,18 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="prefix.js"></script>
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
   />
 <style>
+  html, body {
+    height: 100%;
+}
   body{
     margin: 0px auto;
     font-family: "proxima-nova",sans-serif;
   }
   modal {
     background-color: #000000e0;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
@@ -106,7 +111,7 @@
 }
 
   .cartas{
-    height: 110px;
+    height: 180px;
     display: inline-flex;
     min-width: 100%;
     justify-content: center;
@@ -117,7 +122,7 @@
   }
   #carta_layout_container{
     position: absolute;
-    left: -1555px;
+    left: -155555px;
   }
   #carta_layout{
     height: 100%;
@@ -134,6 +139,8 @@
     margin-left: 5px;
     margin-right: 5px; 
     cursor: pointer;
+
+   
 
   }
   carta .carta_coste{
@@ -156,6 +163,19 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+#dropzone {
+  width: 500px;
+    height: 300px;
+    padding: 10px;
+    border: 5px solid blue;
+}
+#dropzone2 {
+  width: 500px;
+    height: 300px;
+    padding: 10px;
+    border: 5px solid #ff0000;
 }
 </style>
 <script>
@@ -209,39 +229,46 @@
     </div>
     <div class="ten_percent"></div>
   </modal>
+
   <div id="carta_layout_container" class="cartas">
     <img id="carta_layout" src="carta.png">
   </div>
+  <div style="display: flex;">
+    <div id="dropzone" ></div>  <div id="dropzone2" ></div>
+  </div>
+
+  <!-- <div id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)"></div> -->
  <div id="cartas" class="cartas"></div>
 
 </body>
 <script type="text/javascript">
 cartas.forEach(mostar_cartas);
 
+
 function mostar_cartas(item, index) {
-  document.getElementById("cartas").innerHTML +=  "<carta  card_id='" + item.id + "' class='carta_en_mano' style='background-image: url(" + item.imagen_src + ");' ><div class='carta_coste'> " + item.coste + "</div><div class='carta_nombre'><p> " + item.nombre + "</p></div></carta>";
+
  
+  var in_deck_id = index  + 1;
+  document.getElementById("cartas").innerHTML +=  "<carta id='card_" + in_deck_id + "'  draggable='true'  card_id='" + item.id + "'  class='carta_en_mano draggable' style='background-image: url(" + item.imagen_src + ");' ><div class='carta_coste'> " + item.coste + "</div><div class='carta_nombre'><p> " + item.nombre + "</p></div></carta>";
+  
 }
 </script>
 <script>
   setTimeout('imgSize()',50); // solo necesario hasta que halla un preloader 
  // imgSize();
-  
-  
+
   function imgSize(){
     var myImg = document.querySelector("#carta_layout");
     var currWidth = myImg.clientWidth;
     var currHeight = myImg.clientHeight;
+    //console.log("Current width=" + currWidth + ", " + "Original height=" + currHeight);
   
     $('.carta_en_mano').each(function(){
       $(this).css("width",  currWidth+"px");
       $(this).css("height", currHeight+"px" );
     });
-
   }
-  
-  
-  </script>
+</script>
 <script>
 $( ".carta_en_mano" ).on('click', function (evt){
   document.getElementById("modal").style.display= "block"; //muestra el modal
@@ -250,10 +277,10 @@ $( ".carta_en_mano" ).on('click', function (evt){
   // toma los datos de la carta por su id
   var results = cartas.filter(function (nickname) { return nickname.id == cardID; }); 
   var firstObj = (results.length > 0) ? results[0] : null;
-  console.log(" nombre: "+firstObj.nombre);
-  console.log(" id: "+firstObj.id);
-  console.log(" coste: "+firstObj.coste);
-  console.log(" imagen_src: "+firstObj.imagen_src);
+ // console.log(" nombre: "+firstObj.nombre);
+  //console.log(" id: "+firstObj.id);
+  //console.log(" coste: "+firstObj.coste);
+  //console.log(" imagen_src: "+firstObj.imagen_src);
 
   // muestra los datos en el modal
   document.getElementById("carta_en_modal").innerHTML+= "<img src='"+ firstObj.imagen_src + "' >";
@@ -264,5 +291,163 @@ $( "#btn_modal_close_container" ).on('click', function (evt){
   document.getElementById("modal").style.display= "none";
   document.getElementById("carta_en_modal").innerHTML="";
 });
-  </script>
+
+
+
+
+
+
+
+
+
+/* 
+var dropped = false;
+
+
+
+$( ".draggable" ).draggable();
+
+$( "body" ).on( ".draggable dragstart", 
+    function( event, ui ) {
+        dropped = false;
+        console.log( event.target.getAttribute('card_id') );
+       
+        ui.helper.before(ui.helper.clone().draggable());                                         
+    } 
+);
+
+$( "body" ).on( ".drggable dragstop", 
+    function( event, ui ) {
+        if(dropped)
+            ui.helper.draggable('destroy');
+        else
+            ui.helper.remove(); 
+    } 
+);
+
+$('#droppable').droppable({
+    accept: '.draggable',
+    drop: function(event, ui ) {
+        dropped = true;  
+        console.log( event.target.getAttribute('card_id') );
+    }
+});
+ */
+
+
+ $(".draggable").draggable({
+  appendTo: "body",
+  cursor: "move",
+  helper: "clone",
+  // helper: "original",
+  revert: true,
+  revertDuration: 0
+});
+var datos;
+$( "body" ).on( ".draggable dragstart", 
+    function( event, ui ) {
+        dropped = false;
+        //console.log( event.target.getAttribute('card_id') );
+        //console.log( event.target.id );
+
+
+        document.getElementById(event.target.id).style.opacity=" 0";
+
+       // event.dataTransfer.setData("text", event.target.id)
+       datos =  event.target.id;
+
+       
+        // ui.helper.before(ui.helper.clone().draggable());                                         
+    } 
+);
+$( "body" ).on( ".draggable dragstop", 
+    function( event, ui ) {
+      document.getElementById(event.target.id).style.opacity="1";
+      ui.helper.remove(); 
+   /*      if(dropped)
+            ui.helper.draggable('destroy');
+           
+        else
+            ui.helper.remove(); 
+     */} 
+);
+
+ 
+$("#dropzone").droppable({
+  tolerance: 'pointer',
+  drop: function(event, ui) {
+    dropped = true;
+   // var data = event.dataTransfer.getData("text");
+    //$(this).append(ui.draggable.clone()).children().sort(byText).appendTo(this);
+    //console.log( data );
+    console.log( "dropedd: "+datos);
+    document.getElementById(datos).style.display="none";
+  },
+}); 
+ 
+$("#dropzone2").droppable({
+  tolerance: 'pointer',
+  drop: function(event, ui) {
+    dropped = true;
+   // var data = event.dataTransfer.getData("text");
+    //$(this).append(ui.draggable.clone()).children().sort(byText).appendTo(this);
+    //console.log( data );
+   alert( "dropedd: "+datos);
+    document.getElementById(datos).style.display="none";
+  },
+}); 
+/* $('#dropzone').droppable({
+    accept: '.draggable',
+    tolerance: 'pointer',
+    drop: function(event, ui ) {
+          
+        console.log( event );
+        
+    }
+  });
+ */
+
+
+
+// function byText(a, b) {
+//   return $(a).text().localeCompare($(b).text())
+// } 
+
+
+
+
+
+
+
+
+
+
+
+/* function allowDrop(ev) {
+  ev.preventDefault();
+}
+function drop(ev) {
+  ev.preventDefault();
+
+var data = ev.dataTransfer.getData("text");
+console.log("drop: " + data );
+}
+
+
+$('.drop_zone').on('dragover', function (ev) {
+  ev.preventDefault();
+  $('.drop_zone').css("background-color", "#ffd998");
+});
+$('.drop_zone').on('dragleave', function (ev) {
+  ev.preventDefault();
+  $('.drop_zone').css("background-color", "white");
+});
+
+
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.getAttribute('card_id') );
+ // ev.dataTransfer.setData("text", ev.target.id);
+} */
+</script>
 </html>
